@@ -65,3 +65,28 @@ Risks: OS API differences, stale inventory, accidental wipe, over-collection of 
 
 ## 12. Next work
 Select initial operating systems, create source connector matrix, model device lifecycle and destructive-action approvals, then test inventory reconciliation with synthetic sample exports.
+
+## 15. Deep research addendum — evidence and product decisions
+
+### Market evidence
+Microsoft Intune documents device and app deployment, compliance policies, endpoint security, remote actions, OS updates, role-based access, scope tags, audit logs, and troubleshooting. Its architecture integrates with identity, endpoint security, remote support, and ITSM partners. This makes device management an ecosystem problem, not just a hardware inventory table. Sources: [Intune documentation](https://learn.microsoft.com/en-us/intune/), [Intune architecture](https://learn.microsoft.com/en-us/intune/intune-service/fundamentals/high-level-architecture), [Endpoint security](https://learn.microsoft.com/en-us/intune/intune-service/protect/endpoint-security), [CIS Benchmarks](https://www.cisecurity.org/cis-benchmarks).
+
+### Competitive implications
+DeviceDesk should distinguish inventory visibility from actual device control. Do not imply that a browser dashboard can manage or wipe devices without a legitimate enrolled agent, MDM integration, or authorized vendor API. Start with inventory, ownership, lifecycle, and compliance visibility; add remote actions only through auditable integrations.
+
+### Recommended core workflows
+1. Import device inventory and deduplicate by stable device identifier.
+2. Track assigned user, department, model, OS, purchase date, warranty, encryption, and last check-in.
+3. Define compliance policies per platform and show evidence, freshness, and exceptions.
+4. Manage enrollment, provisioning, app rollout, update rings, and device retirement through integrations.
+5. Route device issues into ITDesk/ServiceOps with asset context.
+6. Require elevated permission, confirmation, reason, and audit event for destructive actions such as wipe or retire.
+
+### Security and architecture
+Model Device, UserAssignment, Enrollment, Policy, ComplianceEvaluation, SoftwareDeployment, Warranty, RemoteAction, and AuditEvent. Use least-privilege provider scopes, short-lived credentials, secure webhook validation, and tenant-bound device identifiers. Encrypt sensitive inventory fields and define retention for device location or user activity data.
+
+### Validation and success measures
+Track inventory coverage, duplicate rate, stale check-ins, compliance pass rate, patch/update lag, time to provision, failed deployment rate, and retirement completion. Pilot across Windows, macOS, iOS, and Android only after validating each platform’s supported API capabilities.
+
+### Sources and caveats
+Intune documentation is a primary reference for Microsoft’s ecosystem; it does not establish parity with Apple-focused or other endpoint vendors. Verify OS-specific limitations and licensing before publishing compatibility claims.
